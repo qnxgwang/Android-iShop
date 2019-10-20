@@ -30,6 +30,10 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         getSupportActionBar().hide();//隐藏标题栏
+        initView();
+    }
+
+    public void initView(){
         myCityListView = findViewById (R.id.list_content);
         returnView = findViewById(R.id.returnButton);
         returnView.setOnTouchListener(new View.OnTouchListener() {

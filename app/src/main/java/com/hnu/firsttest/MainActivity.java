@@ -90,19 +90,23 @@ public class MainActivity extends AppCompatActivity implements com.baidu.speech.
         super.onDestroy();
         asr.send(SpeechConstant.ASR_CANCEL, "{}", null, 0, 0);
         asr.unregisterListener(this);//退出事件管理器
-        // 必须与registerListener成对出现，否则可能造成内存泄露
     }
+
+    /**
+     * 识别事件
+     * @param name
+     * @param params
+     * @param data
+     * @param offset
+     * @param length
+     */
+
     public void onEvent(String name, String params, byte[] data, int offset, int length) {
         String resultTxt = null;
-//        System.out.println("*****************************");
-//        System.out.println("name:"+name);
-//        System.out.println("param:"+params);
         if (name.equals(SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL)){//识别结果参数
             if (params.contains("\"final_result\"")){//语义结果值
                 try {
                     JSONObject json = new JSONObject(params);
-//                    System.out.println("*****************************");
-//                    System.out.println(json);
                     String result = json.getString("best_result");//取得key的识别结果
                     resultTxt = result;
                 } catch (JSONException e) {
@@ -114,6 +118,10 @@ public class MainActivity extends AppCompatActivity implements com.baidu.speech.
             searchText.setText(resultTxt);
         }
     }
+
+    /**
+     * view预处理
+     */
     private void initView() {
         getSupportActionBar().hide();//隐藏标题栏
         addText = findViewById(R.id.addtext);
@@ -175,25 +183,29 @@ public class MainActivity extends AppCompatActivity implements com.baidu.speech.
         return paint;
     }
 
+    /**
+     * 后端接口
+     * @param msg
+     * @return
+     * @throws IOException
+     */
     public static String httpUtil(String msg) throws IOException {
         String version = "";
         version= URLEncoder.encode(msg,"UTF-8");
         String uri = "http://192.168.43.158:8089/shopAndGoods/detail?originalText="+version;
         URL url = new URL(uri);
-        //2. HttpURLConnection
         HttpURLConnection conn=(HttpURLConnection)url.openConnection();
-        //3. set(GET)
+
         conn.setRequestMethod("GET");
-        //4. getInputStream
+
         InputStream is = conn.getInputStream();
-        //5. 解析is，获取responseText，这里用缓冲字符流
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
         String line = null;
         while((line=reader.readLine()) != null){
             sb.append(line);
         }
-        //获取响应文本
         String responseText = sb.toString();
         return responseText;
     }
@@ -213,8 +225,6 @@ public class MainActivity extends AppCompatActivity implements com.baidu.speech.
         for (String perm :permissions){
             if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(this, perm)) {
                 toApplyList.add(perm);
-                //进入到这里代表没有权限.
-
             }
         }
         String tmpList[] = new String[toApplyList.size()];
@@ -224,8 +234,6 @@ public class MainActivity extends AppCompatActivity implements com.baidu.speech.
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        // 此处为android 6.0以上动态授权的回调，用户自行实现。
-
     }
 
 }

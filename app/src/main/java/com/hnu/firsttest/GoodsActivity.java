@@ -34,6 +34,7 @@ public class GoodsActivity extends AppCompatActivity {
         getSupportActionBar().hide();//隐藏标题栏
         ImageView returnImage = findViewById(R.id.returnButton);
         initText();
+        initImage();
         returnImage.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -41,6 +42,19 @@ public class GoodsActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
+    }
+
+    public void turn_Image(){
+        Max_Image.setBackgroundDrawable(getResources().getDrawable(image[num++]));
+        Max_Image.invalidate();
+        if(num>=3){
+            num = 1;
+        }
+    }
+
+    public void initImage(){
         simple_Image[1] = findViewById(R.id.color1);
         simple_Image[2] = findViewById(R.id.color2);
         for(int i=1;i<=2;i++){
@@ -58,18 +72,7 @@ public class GoodsActivity extends AppCompatActivity {
                 return true;
             }
         });
-
-
     }
-
-    public void turn_Image(){
-        Max_Image.setBackgroundDrawable(getResources().getDrawable(image[num++]));
-        Max_Image.invalidate();
-        if(num>=3){
-            num = 1;
-        }
-    }
-
     public void initText(){
         price = findViewById(R.id.goods_Price);
         goods_name = findViewById(R.id.detailMsg);

@@ -42,7 +42,6 @@ class ShopAdapter extends ArrayAdapter<Shop> {
                 new Thread(){
                     public void run(){
                         Intent goodsIntent = new Intent(getContext(),GoodsActivity.class);
-                        //
                         String str = "";
                         try {
                             String param=""+getItem(position).getId();
@@ -57,7 +56,6 @@ class ShopAdapter extends ArrayAdapter<Shop> {
                         getContext().startActivity(goodsIntent);
                     }
                 }.start();
-
             }
         });
 
@@ -72,6 +70,12 @@ class ShopAdapter extends ArrayAdapter<Shop> {
         return convertView;
     }
 
+    /**
+     * 后端接口类
+     * @param msg
+     * @return
+     * @throws IOException
+     */
     public String httpUtil(String msg) throws IOException {
         String uri = "http://192.168.43.158:8089/goodsDetail?id="+msg;
         URL url = new URL(uri);

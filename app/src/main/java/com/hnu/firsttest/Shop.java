@@ -30,12 +30,7 @@ public class Shop {
     public String getShop(){
         return shop;
     }
-
-    public int getImageId() {
-        return imageId;
-    }
-    public String getAdd(){
-        return add;
-    }
+    public int getImageId() { return imageId;}
+    public String getAdd(){ return add; }
 
 }
